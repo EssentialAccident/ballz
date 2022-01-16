@@ -39,8 +39,9 @@ build-iPhoneSimulator/
 /rdoc/
 
 ## Environment normalization:
-/vendor/
-/vendor/bundle
+vendor
+vendor/
+# /vendor/bundle
 lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
