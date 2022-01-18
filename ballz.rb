@@ -17,13 +17,15 @@ require_relative 'lib/my_square'
 SQUARE_SIZE = 64 # Size of the squares of the game
 SQUARE_DIVISION = 3 # Separation between squares
 FONT_SIZE = SQUARE_SIZE.to_f / 2.5 # Size of the font of the counter in the square
+SQUARES_PER_LINE = 7
+SQUARES_PER_COLUMN = 9
 
 # Setting up the window
 set({
       title: 'Ballz',
       background: 'black',
-      width: SQUARE_SIZE * 7,
-      height: SQUARE_SIZE * 9,
+      width: SQUARE_SIZE * SQUARES_PER_LINE,
+      height: SQUARE_SIZE * SQUARES_PER_COLUMN,
       resizable: false,
       fullscreen: false
     })
@@ -39,14 +41,17 @@ end
 # Update loop
 update do
 end
-
-my_square = MySquare.new({
-                           position: Vector2d.new(3, 3),
-                           z: 1,
-                           size: SQUARE_SIZE,
-                           color: 'red',
-                           count: 5
-                         })
-
+squares = []
+(Window.width / SQUARE_SIZE).times do |count|
+  squares.append(
+    MySquare.new({
+                   position: Vector2d.new(count * SQUARE_SIZE, 0),
+                   z: 1,
+                   size: SQUARE_SIZE,
+                   color: 'red',
+                   count: 5
+                 })
+  )
+end
 # Show the window
 show
