@@ -4,11 +4,10 @@
 class MySquare < Ruby2D::Square
   def initialize(opts = {})
     # Initializing the square
-    @position = opts[:position] + Vector2d.new(SQUARE_DIVISION, SQUARE_DIVISION)
+    @position = opts[:position]
     @count = opts[:count]
     opts[:x] = @position.x
     opts[:y] = @position.y
-    opts[:size] -= SQUARE_DIVISION
     super(opts)
 
     # Initializing the text
