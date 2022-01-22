@@ -9,13 +9,15 @@ class MySquare < Ruby2D::Square
   def initialize(opts = {})
     # opts[:position] is the position of the square on the grid
     # Initializing the square
-    grid_position(opts[:grid_position])
+    super
+    # For some reason, in the initializer, Ruby does not use the custom setter.
+    # It has to be called appending the self. in front of it.
+    self.grid_position = opts[:grid_position]
+    self.color = 'red'
+    self.size = SQUARE_SIZE
+    self.z = 1
+
     @count = opts[:count]
-    opts[:x] = @screen_position.x
-    opts[:y] = @screen_position.y
-    opts[:color] = 'red'
-    opts[:size] = SQUARE_SIZE
-    super(opts)
 
     # Initializing the text
     @count_text = Text.new(
@@ -29,12 +31,15 @@ class MySquare < Ruby2D::Square
     calculate_text_position
   end
 
-  def grid_position(position)
+  # @grid_position setter
+  def grid_position=(position)
     @grid_position = position
-    @screen_position = Vector2d.new(
-      (position.x * SQUARE_SIZE) + ((position.x + 1) * SQUARE_DIVISION),
-      (position.y * SQUARE_SIZE) + ((position.y + 1) * SQUARE_DIVISION)
-    )
+    @x = (@grid_position.x * SQUARE_SIZE) + ((@grid_position.x + 1) * SQUARE_DIVISION)
+    @y = (@grid_position.y * SQUARE_SIZE) + ((@grid_position.y + 1) * SQUARE_DIVISION)
+  end
+
+  def move_down
+    @grid_position += Vecotor2d.new(0, 1)
   end
 
   private
