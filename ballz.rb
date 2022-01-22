@@ -18,7 +18,7 @@ require_relative 'lib/squares'
 # Constants
 SQUARE_SIZE = 64 # Size of the squares of the game
 SQUARE_DIVISION = 5 # Separation between squares
-FONT_SIZE = SQUARE_SIZE.to_f / 2.5 # Size of the font of the counter in the square
+FONT_SIZE = SQUARE_SIZE.to_f / 3 # Size of the font of the counter in the square
 SQUARES_PER_LINE = 7
 SQUARES_PER_COLUMN = 9
 
@@ -40,6 +40,15 @@ on :key_down do |event|
   case event.key
   when 'escape'
     close
+  when 'a'
+    squares.add_level
+  end
+end
+
+on :mouse_down do |event|
+  case event.button
+  when :left
+    squares.check_collision(Vector2d.new(event.x, event.y))
   end
 end
 
