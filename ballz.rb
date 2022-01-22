@@ -8,9 +8,11 @@
 # Required Libraries
 require 'ruby2d'
 require 'vector2d'
+require 'pp'
 
 # Require local dependecies
 require_relative 'lib/my_square'
+require_relative 'lib/squares'
 ##  Main Program  ##
 
 # Constants
@@ -19,6 +21,9 @@ SQUARE_DIVISION = 5 # Separation between squares
 FONT_SIZE = SQUARE_SIZE.to_f / 2.5 # Size of the font of the counter in the square
 SQUARES_PER_LINE = 7
 SQUARES_PER_COLUMN = 9
+
+# Setting up objects
+squares = Squares.new
 
 # Setting up the window
 set({
@@ -41,17 +46,6 @@ end
 # Update loop
 update do
 end
-squares = []
-(Window.width / SQUARE_SIZE).times do |count|
-  squares.append(
-    MySquare.new({
-                   position: Vector2d.new((count * SQUARE_SIZE) + (SQUARE_DIVISION * (count + 1)), 0),
-                   z: 1,
-                   size: SQUARE_SIZE,
-                   color: 'red',
-                   count: 5
-                 })
-  )
-end
+
 # Show the window
 show
