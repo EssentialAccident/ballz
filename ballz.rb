@@ -13,6 +13,7 @@ require 'pp'
 # Require local dependecies
 require_relative 'lib/my_square'
 require_relative 'lib/squares'
+require_relative 'lib/ball'
 ##  Main Program  ##
 
 # Constants
@@ -21,9 +22,7 @@ SQUARE_DIVISION = 5 # Separation between squares
 FONT_SIZE = SQUARE_SIZE.to_f / 3 # Size of the font of the counter in the square
 SQUARES_PER_LINE = 7
 SQUARES_PER_COLUMN = 9
-
-# Setting up objects
-squares = Squares.new
+BALL_RADIUS = SQUARE_SIZE / 8
 
 # Setting up the window
 set({
@@ -34,6 +33,10 @@ set({
       resizable: false,
       fullscreen: false
     })
+
+# Setting up objects
+squares = Squares.new
+balls = Balls.new
 
 # Events
 on :key_down do |event|
