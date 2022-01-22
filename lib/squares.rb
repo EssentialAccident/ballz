@@ -21,24 +21,38 @@ class Squares
     add_line(@level)
   end
 
+  def check_collision(screen_position)
+    grid_position = get_grid_position(screen_position)
+  end
+
   private
 
   # It adds a line into the grid according to the level
   def add_line(level)
     # Sets how many squares will be add to the line
     num_squares = rand(2..SQUARES_PER_LINE)
-
     # Set the position of those squares in the line
+    positions = calculate_level_positions(num_squares)
+    # Calculates the count for the squares
+    counts = calculate_counts_positions(positions, level)
+    # Add the squares to the @squares matrix
+    @squares.append(add_squares(positions, counts))
+  end
+
+  def calculate_level_positions(num_squares)
     positions = []
     while positions.count < num_squares
       try = rand(SQUARES_PER_LINE)
       positions.append(try) unless positions.include?(try)
     end
+    positions
+  end
 
-    # Set up the count for the squares
-    # 70% of the time the count will be equal to the level
-    # 26% of the time the count will twice the value fo the level
-    #  4% of the time the count will be three times the value of the level
+  # Set up the count for the squares
+  # 70% of the time the count will be equal to the level
+  # 26% of the time the count will twice the value fo the level
+  #  4% of the time the count will be three times the value of the level
+  def calculate_counts_positions(positions, level)
     counts = []
     positions.count.times do
       case rand(100)
@@ -51,8 +65,10 @@ class Squares
       end
       counts.append(try)
     end
+    counts
+  end
 
-    # Add the squares to the @squares matrix
+  def add_squares(positions, counts)
     add = []
     positions.each_index do |index|
       add.append(MySquare.new(
@@ -60,7 +76,7 @@ class Squares
                    count: counts[index]
                  ))
     end
-    @squares.append(add)
+    add
   end
 
   # It pushes the existing lines of squares one line down
