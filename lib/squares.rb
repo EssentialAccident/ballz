@@ -26,8 +26,6 @@ class Squares
       lines.map { |square| square.check_collision(screen_position) }
       lines.reject! { |square| square.count <= 0 }
     end
-    puts @squares
-    puts
   end
 
   private
