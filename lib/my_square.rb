@@ -12,30 +12,34 @@ class MySquare < Ruby2D::Square
     super
     # For some reason, in the initializer, Ruby does not use the custom setter.
     # It has to be called appending the self. in front of it.
-    self.grid_position = opts[:grid_position]
+    self.z = 1
     self.color = 'red'
     self.size = SQUARE_SIZE
-    self.z = 1
-
-    @count = opts[:count]
+    # The X and Y coordinates of the text depend on everything else
+    # The text needs to be already instanciated when the position setter is called
+    initialize_text_count
+    self.grid_position = opts[:grid_position]
+    self.count = opts[:count]
 
     # Initializing the text
-    @count_text = Text.new(
-      @count.to_s,
-      {
-        size: FONT_SIZE,
-        color: 'white',
-        z: @z + 3
-      }
-    )
-    calculate_text_position
   end
 
   # @grid_position setter
   def grid_position=(position)
+    # Updating the grid position
     @grid_position = position
+    # Updating the screen position of the square accordign to grid position
     self.x = (@grid_position.x * SQUARE_SIZE) + ((@grid_position.x + 1) * SQUARE_DIVISION)
     self.y = (@grid_position.y * SQUARE_SIZE) + ((@grid_position.y + 1) * SQUARE_DIVISION)
+    # Updating the posiotion of the text aacording to grid position
+
+    @count_text.x = @x + @count_text.size
+    @count_text.y = @y + (@count_text.size / 2)
+  end
+
+  def count=(count)
+    @count = count
+    @count_text.text = @count.to_s
   end
 
   def move_down
@@ -45,10 +49,14 @@ class MySquare < Ruby2D::Square
 
   private
 
-  def calculate_text_position
-    x = @x + (SQUARE_SIZE / 2) - (FONT_SIZE * @count.to_s.length / 2)
-    y = ((@y + SQUARE_SIZE) / 2) - (FONT_SIZE / 2)
-    @count_text.x = x
-    @count_text.y = y
+  def initialize_text_count
+    @count_text = Text.new(
+      '',
+      {
+        size: FONT_SIZE,
+        color: 'white',
+        z: @z + 3
+      }
+    )
   end
 end
