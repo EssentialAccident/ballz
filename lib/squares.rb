@@ -22,7 +22,12 @@ class Squares
   end
 
   def check_collision(screen_position)
-    grid_position = get_grid_position(screen_position)
+    @squares.each do |lines|
+      lines.map { |square| square.check_collision(screen_position) }
+      lines.reject! { |square| square.count <= 0 }
+    end
+    puts @squares
+    puts
   end
 
   private
