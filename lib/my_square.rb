@@ -34,12 +34,13 @@ class MySquare < Ruby2D::Square
   # @grid_position setter
   def grid_position=(position)
     @grid_position = position
-    @x = (@grid_position.x * SQUARE_SIZE) + ((@grid_position.x + 1) * SQUARE_DIVISION)
-    @y = (@grid_position.y * SQUARE_SIZE) + ((@grid_position.y + 1) * SQUARE_DIVISION)
+    self.x = (@grid_position.x * SQUARE_SIZE) + ((@grid_position.x + 1) * SQUARE_DIVISION)
+    self.y = (@grid_position.y * SQUARE_SIZE) + ((@grid_position.y + 1) * SQUARE_DIVISION)
   end
 
   def move_down
-    @grid_position += Vecotor2d.new(0, 1)
+    new_position = @grid_position + Vector2d.new(0, 1)
+    self.grid_position = new_position
   end
 
   private

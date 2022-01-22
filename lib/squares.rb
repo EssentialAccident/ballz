@@ -6,13 +6,25 @@ class Squares
 
   # @squares Will hold the squares that will be shown on the screen
   def initialize
-    @level = 1
+    @level = 0
     @squares = []
-    add_level(@level)
+    add_level
   end
 
   # Every time the player gets to a new level this method will add the necessary squares to matrix
-  def add_level(level)
+  def add_level
+    # Adds one to the current level
+    @level += 1
+    # It pushes down the existing lines down before adding a new one
+    push_lines_down
+    # It adds a new line of square accordign to the level
+    add_line(@level)
+  end
+
+  private
+
+  # It adds a line into the grid according to the level
+  def add_line(level)
     # Sets how many squares will be add to the line
     num_squares = rand(2..SQUARES_PER_LINE)
 
@@ -48,9 +60,13 @@ class Squares
                    count: counts[index]
                  ))
     end
-    puts num_squares
-    puts level
-    pp positions.sort
-    pp counts
+    @squares.append(add)
+  end
+
+  # It pushes the existing lines of squares one line down
+  def push_lines_down
+    @squares.each do |line|
+      line.map(&:move_down)
+    end
   end
 end
